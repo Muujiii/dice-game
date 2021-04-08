@@ -83,7 +83,7 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
         document.getElementById("score-" + activePlayer).textContent =scores[activePlayer];
 
         // Check the winner (point up than 100)
-        if (scores[activePlayer] >= 20) {
+        if (scores[activePlayer] >= 100) {
             isGameOver = true;
             // Winner textiig nerniih ni orond gargana
             document.getElementById("name-" + activePlayer).textContent = "WINNER!!!"
