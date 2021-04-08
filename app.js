@@ -1,5 +1,8 @@
 // Togloomiin bvh gazar ashiglagdah Global huvisagchiig end zarlay
 
+
+// Togloom duussan esehiig hadgalah toloviin huvisagch
+let isGameOver;
 // Ali toglogch shooog shideh ve gedgiig hadgalah huvisagch
 let activePlayer;
 // Toglogchdiin tsugluulsan onoog hadgalah huvisagch
@@ -15,6 +18,8 @@ initGame();
 
 // Togloomiig shineer ehlehed beltgene
 function initGame(){
+    // Togloom ehellee gedeg tolovt oruulna
+    isGameOver = false;
     activePlayer = 0;
     // Toglogchdiin tsugluulsan onoog hadgalah huvisagch
     scores = [0, 0];
@@ -42,45 +47,54 @@ function initGame(){
 // Shoog shideh event listener  BTN-ROLL
 
 document.querySelector(".btn-roll").addEventListener("click", function() {
-    // 1-6 iin random toog gargaj avna
-    let diceNumber = Math.floor(Math.random() * 6) + 1;
+    if (isGameOver === false) {
+        // 1-6 iin random toog gargaj avna
+        let diceNumber = Math.floor(Math.random() * 6) + 1;
 
-    // Shoonii zurgiig web deer gargaj irne.
-    diceDom.style.display = "block";
+        // Shoonii zurgiig web deer gargaj irne.
+        diceDom.style.display = "block";
 
-    // Buusan random toond hargalzah shoonii zyrag web deer gargaj irne
-    diceDom.src = "dice-" + diceNumber + ".png";
+        // Buusan random toond hargalzah shoonii zyrag web deer gargaj irne
+        diceDom.src = "dice-" + diceNumber + ".png";
 
-    // Buusan too ni 1ees yalgaatai bol idevhitei Toglogchiin eeljiin onoog nemegdvvlne
-    if (diceNumber !== 1) {
-        // 1-ees yalgaatai buulaa.Buusan toog toglogchid nemj ogno
-        roundScore = roundScore + diceNumber;
-        document.getElementById("current-" + activePlayer).textContent = roundScore;
+        // Buusan too ni 1ees yalgaatai bol idevhitei Toglogchiin eeljiin onoog nemegdvvlne
+        if (diceNumber !== 1) {
+            // 1-ees yalgaatai buulaa.Buusan toog toglogchid nemj ogno
+            roundScore = roundScore + diceNumber;
+            document.getElementById("current-" + activePlayer).textContent = roundScore;
 
+        } else {
+            // 1 buusan tul toglogchiin eeljiig ene hesegt solij ogno.
+            switchToNextPlayer();
+        }
     } else {
-        // 1 buusan tul toglogchiin eeljiig ene hesegt solij ogno.
-        switchToNextPlayer();
+        alert("Game is over. If you want to play again, please click the 'NEW GAME' button.");
     }
 });
 
 // HOLD tovchnii Event Listener
 
 document.querySelector(".btn-hold").addEventListener("click", function() {
-    // Ug toglogchiin tsugluulsan eeljin onoog Global onoon deer nemj ogno
-    scores[activePlayer] += roundScore;
+    if (isGameOver === false) {
+        // Ug toglogchiin tsugluulsan eeljin onoog Global onoon deer nemj ogno
+        scores[activePlayer] += roundScore;
 
-    // Delgets deer onoog oorchilj uzuulne
-    document.getElementById("score-" + activePlayer).textContent =scores[activePlayer];
+        // Delgets deer onoog oorchilj uzuulne
+        document.getElementById("score-" + activePlayer).textContent =scores[activePlayer];
 
-    // Check the winner (point up than 100)
-    if (scores[activePlayer] >= 20) {
-        // Winner textiig nerniih ni orond gargana
-        document.getElementById("name-" + activePlayer).textContent = "WINNER!!!"
-        document.querySelector(".player-" + activePlayer + "-panel").classList.add("winner");
-        document.querySelector(".player-" + activePlayer + "-panel").classList.remove("active");
-    } else {     
-        //toglogchiin eeljiig ene hesegt solij ogno.
-        switchToNextPlayer();
+        // Check the winner (point up than 100)
+        if (scores[activePlayer] >= 20) {
+            isGameOver = true;
+            // Winner textiig nerniih ni orond gargana
+            document.getElementById("name-" + activePlayer).textContent = "WINNER!!!"
+            document.querySelector(".player-" + activePlayer + "-panel").classList.add("winner");
+            document.querySelector(".player-" + activePlayer + "-panel").classList.remove("active");
+        } else {     
+            //toglogchiin eeljiig ene hesegt solij ogno.
+            switchToNextPlayer();
+        }
+    } else {
+        alert("Game is over. If you want to play again, please click the 'NEW GAME' button.");
     }
 })
 
